@@ -6,7 +6,22 @@ By the end of this module, you will be able to:
 - Install and manage applications using Helm Charts (The Recipe).
 - Create a basic Helm Chart.
 
-## 1. What is Helm?
+## 1. The Problem: YAML Hell
+
+Before Helm, managing Kubernetes applications was painful.
+
+### The "Old Way"
+Imagine you have a `deployment.yaml` for your app.
+- **Dev Environment**: You need 1 replica and `image: my-app:dev`.
+- **Prod Environment**: You need 10 replicas and `image: my-app:v1.0`.
+
+**Solution 1**: Copy-paste the file 2 times. (Maintenance nightmare).
+**Solution 2**: Use `sed` or `envsubst` to replace strings. (Fragile and messy).
+
+### The "Helm Way"
+Helm solves this by creating a **Template** (the logic) and separating it from the **Values** (the data).
+
+## 2. What is Helm?
 
 Helm is the **package manager** for Kubernetes.
 
@@ -24,10 +39,9 @@ It helps you manage Kubernetes applications — Helm Charts help you define, ins
 - **Repository**: A place where charts can be collected and shared.
   - **Analogy**: The **Cookbook** or **App Store Server**.
 
-## 2. Using Helm
+## 3. Using Helm
 
-### 2.1 Install Helm
-### 2.1 Install Helm
+### 3.1 Install Helm
 
 #### MacOS
 ```bash
@@ -54,7 +68,7 @@ Using Snap:
 snap install helm --classic
 ```
 
-### 2.2 Add a Repository
+### 3.2 Add a Repository
 Before you can install apps, you need to add the "Store" to your list.
 
 ```bash
@@ -62,34 +76,34 @@ helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update
 ```
 
-### 2.3 Install a Chart
+### 3.3 Install a Chart
 ```bash
 # Install MySQL
 # "Bake me a MySQL cake and call it 'my-db'"
 helm install my-db bitnami/mysql
 ```
 
-### 2.4 List Releases
+### 3.4 List Releases
 ```bash
 # "Show me all the cakes I've baked"
 helm list
 ```
 
-### 2.5 Uninstall a Release
+### 3.5 Uninstall a Release
 ```bash
 # "Throw this cake in the trash"
 helm uninstall my-db
 ```
 
-## 3. Creating a Chart
+## 4. Creating a Chart
 
-### 3.1 Create the structure
+### 4.1 Create the structure
 ```bash
 helm create my-chart
 ```
 This creates a directory `my-chart` with standard files (`Chart.yaml`, `values.yaml`, `templates/`).
 
-### 3.2 The `values.yaml` file
+### 4.2 The `values.yaml` file
 This is where you define default configuration values. Users can override these when installing the chart.
 
 **Analogy**: **Customizing the Order**.
@@ -104,7 +118,7 @@ image:
   tag: stable
 ```
 
-### 3.3 Templates
+### 4.3 Templates
 Files in `templates/` use the Go templating language. They take the `values.yaml` and inject them into the YAML files.
 
 ```yaml
@@ -116,7 +130,7 @@ spec:
   ...
 ```
 
-### 3.4 Install your local chart
+### 4.4 Install your local chart
 ```bash
 helm install my-local-app ./my-chart
 ```

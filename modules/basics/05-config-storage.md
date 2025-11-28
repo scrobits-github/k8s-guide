@@ -7,7 +7,18 @@ By the end of this module, you will be able to:
 - Use Secrets for sensitive data (The Safe).
 - Inject configuration as Environment Variables or Files.
 
-## 1. ConfigMaps
+## 1. The 12-Factor App Philosophy
+
+Modern cloud-native applications follow the **12-Factor App** methodology.
+**Factor III: Config** states: *"Store config in the environment"*.
+
+### Why?
+- **Traditional Way**: Hardcoding config in `config.js` or `settings.py`.
+  - **Problem**: You need to rebuild the code to change the database URL from Dev to Prod.
+- **The K8s Way**: The code is the same everywhere (Docker Image). The *config* is injected from the outside.
+  - **Benefit**: Build once, run anywhere.
+
+## 2. ConfigMaps
 
 A **ConfigMap** is an API object used to store non-confidential data in key-value pairs.
 
@@ -16,7 +27,7 @@ A **ConfigMap** is an API object used to store non-confidential data in key-valu
 - Anyone in the room (Pod) can read it.
 - If you want to change the theme, you just write a new note. You don't have to rebuild the entire room.
 
-### 1.1 Creating a ConfigMap
+### 2.1 Creating a ConfigMap
 Create `configmap.yaml`:
 
 ```yaml
@@ -29,7 +40,7 @@ data:
   ui_properties_file_name: "user-interface.properties"
 ```
 
-### 1.2 Using a ConfigMap (Env Vars)
+### 2.2 Using a ConfigMap (Env Vars)
 ```yaml
 apiVersion: v1
 kind: Pod
@@ -49,7 +60,7 @@ spec:
               key: player_lives
 ```
 
-## 2. Secrets
+## 3. Secrets
 
 A **Secret** is similar to a ConfigMap but is intended to hold small amounts of sensitive data such as passwords, OAuth tokens, and SSH keys.
 
@@ -61,13 +72,13 @@ A **Secret** is similar to a ConfigMap but is intended to hold small amounts of 
 > [!IMPORTANT]
 > Secrets are base64 encoded, NOT encrypted by default. It's like writing a password in a secret language that is easy to translate. Enable encryption at rest in etcd for production.
 
-### 2.1 Creating a Secret
+### 3.1 Creating a Secret
 ```bash
 # Imperative
 kubectl create secret generic my-secret --from-literal=password=123456
 ```
 
-### 2.2 Using a Secret (Volume Mount)
+### 3.2 Using a Secret (Volume Mount)
 Sometimes apps expect config files, not env vars. You can mount Secrets (and ConfigMaps) as files.
 
 **Analogy**: Putting the secret document **inside a folder** on the worker's desk.
