@@ -14,9 +14,29 @@ By the end of this module, you will be able to:
 
 **Analogy**: Think of `kubectl` as the **remote control** for your drone (the cluster). You press buttons (commands) on the remote, and the drone executes them.
 
-**MacOS (Homebrew)**:
+#### MacOS
 ```bash
 brew install kubectl
+```
+
+#### Windows
+Using Chocolatey:
+```powershell
+choco install kubernetes-cli
+```
+Using Winget:
+```powershell
+winget install -e --id Kubernetes.kubectl
+```
+
+#### Linux
+Using Snap:
+```bash
+snap install kubectl --classic
+```
+Using Apt (Debian/Ubuntu):
+```bash
+sudo apt-get update && sudo apt-get install -y kubectl
 ```
 
 **Verify installation**:
@@ -27,9 +47,27 @@ kubectl version --client
 ### 1.2 Install kind (Kubernetes in Docker)
 `kind` lets you run Kubernetes clusters locally using Docker containers. It simulates a cluster inside your laptop.
 
-**MacOS (Homebrew)**:
+#### MacOS
 ```bash
 brew install kind
+```
+
+#### Windows
+Using Chocolatey:
+```powershell
+choco install kind
+```
+Using Winget:
+```powershell
+winget install Kubernetes.kind
+```
+
+#### Linux
+```bash
+# For AMD64 / x86_64
+[ $(uname -m) = x86_64 ] && curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.20.0/kind-linux-amd64
+chmod +x ./kind
+sudo mv ./kind /usr/local/bin/kind
 ```
 
 **Create a cluster**:

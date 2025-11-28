@@ -27,9 +27,31 @@ It helps you manage Kubernetes applications — Helm Charts help you define, ins
 ## 2. Using Helm
 
 ### 2.1 Install Helm
-**MacOS (Homebrew)**:
+### 2.1 Install Helm
+
+#### MacOS
 ```bash
 brew install helm
+```
+
+#### Windows
+Using Chocolatey:
+```powershell
+choco install kubernetes-helm
+```
+Using Winget:
+```powershell
+winget install Helm.Helm
+```
+
+#### Linux
+Using Script:
+```bash
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+```
+Using Snap:
+```bash
+snap install helm --classic
 ```
 
 ### 2.2 Add a Repository
